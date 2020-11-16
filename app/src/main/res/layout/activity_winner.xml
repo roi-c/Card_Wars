@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    tools:context=".activities.Activity_Winner"
+    >
+
+    <ImageView
+        android:id="@+id/winner_IMG_trophy"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_trophy"/>
+
+    <TextView
+        android:id="@+id/winner_LBL_title_winner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/winner_IMG_trophy"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/titleColor"
+        android:textSize="52sp"
+        android:textStyle="bold"
+        android:text="Winner: "/>
+
+    <TextView
+        android:id="@+id/winner_LBL_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/winner_LBL_title_winner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/nameColor"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:text="winner name"
+        />
+
+    <TextView
+        android:id="@+id/winner_LBL_title_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/winner_LBL_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/titleColor"
+        android:textSize="52sp"
+        android:textStyle="bold"
+        android:text="Score: "/>
+
+    <TextView
+        android:id="@+id/winner_LBL_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/winner_LBL_title_score"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/scoreColor"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:text="0"
+        />
+
+    <Button
+        android:id="@+id/winner_BTN_replay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/winner_BTN_close"
+        android:padding="12dp"
+        android:textAllCaps="false"
+        android:text="Replay"/>
+
+    <Button
+        android:id="@+id/winner_BTN_close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="12dp"
+        android:textAllCaps="false"
+        android:text="Close"/>
+
+</RelativeLayout>
+
+
+
+
