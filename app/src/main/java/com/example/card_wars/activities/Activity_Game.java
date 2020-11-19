@@ -14,16 +14,18 @@ import android.widget.Toast;
 
 import com.example.card_wars.R;
 import com.example.card_wars.objects.Card;
+import com.example.card_wars.objects.Deck;
 import com.example.card_wars.objects.Player;
 
 import java.util.Collections;
 import java.util.Stack;
 
 public class Activity_Game extends AppCompatActivity {
+    public static final int DELAY = 2500;
 
     private Player player1;
     private Player player2;
-    private Stack<Card> deck;
+    private Deck deck;
     private int currentRoundNumber;
     private boolean isTie;
 
@@ -43,7 +45,7 @@ public class Activity_Game extends AppCompatActivity {
 
         player1 = new Player("Skier");
         player2 = new Player("Snowboarder");
-        deck = createNewDeck(true);
+        deck = new Deck(true);
         currentRoundNumber = 0;
         isTie = false;
 
@@ -68,15 +70,15 @@ public class Activity_Game extends AppCompatActivity {
         Card cardOfPlayer1, cardOfPlayer2;
         int cardValueOfPlayer1, cardValueOfPlayer2;
 
-        if (deck.empty()) {
+        if (deck.isEmpty()) {
             return;
         }
 
-        cardOfPlayer1 = deck.pop();
+        cardOfPlayer1 = deck.drawCard();
         cardValueOfPlayer1 = cardOfPlayer1.getValue();
         showCard(cardOfPlayer1, game_IMG_card1);
 
-        cardOfPlayer2 = deck.pop();
+        cardOfPlayer2 = deck.drawCard();
         cardValueOfPlayer2 = cardOfPlayer2.getValue();
         showCard(cardOfPlayer2, game_IMG_card2);
 
@@ -88,7 +90,7 @@ public class Activity_Game extends AppCompatActivity {
             game_LBL_roundNumber.setText("" + currentRoundNumber);
         }
 
-        if (deck.empty()) {
+        if (deck.isEmpty()) {
             checkForWinner();
         }
 
@@ -128,7 +130,7 @@ public class Activity_Game extends AppCompatActivity {
         } else if (scoreOfPlayer1 < scoreOfPlayer2) {
             openWinnerActivity(Activity_Game.this, player2);
         } else { // its a tie
-            deck = createNewDeck(false);
+            deck = new Deck(false);
             game_LBL_title.setText("TIE BREAKER");
             game_LBL_title.setTextColor(getColor(R.color.red));
             game_LBL_roundNumber.setText("");
@@ -142,7 +144,6 @@ public class Activity_Game extends AppCompatActivity {
         
         String name = winner.getName();
         int score = winner.getScore();
-        int delayInMs = 2500;
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -154,27 +155,8 @@ public class Activity_Game extends AppCompatActivity {
                 startActivity(myIntent);
                 finish();
             }
-        }, delayInMs);
+        }, DELAY);
     }
-
-    private Stack<Card> createNewDeck(boolean isRegularDeck) {
-        Stack<Card> deck = new Stack<Card>();
-
-        if (isRegularDeck) {
-            Card.eType[] allTypes = Card.eType.values();
-            Card.eName[] allNames = Card.eName.values();
-            for (Card.eName name : allNames) {
-                for (Card.eType type : allTypes) {
-                    deck.push(new Card(name, type));
-                }
-            }
-        } else { // its a tie-breaker deck
-            deck.push(new Card(Card.eName.King, Card.eType.Diamonds));
-            deck.push(new Card(Card.eName.Ace, Card.eType.Clubs));
-        }
-        Collections.shuffle(deck);
-        return deck;
-    } // createNewDeck
 
     @Override
     protected void onStart() {
