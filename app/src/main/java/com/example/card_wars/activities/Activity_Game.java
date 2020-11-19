@@ -13,21 +13,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.card_wars.R;
+import com.example.card_wars.objects.GameManager;
 import com.example.card_wars.objects.Card;
-import com.example.card_wars.objects.Deck;
 import com.example.card_wars.objects.Player;
 
-import java.util.Collections;
-import java.util.Stack;
 
 public class Activity_Game extends AppCompatActivity {
     public static final int DELAY = 2500;
 
-    private Player player1;
-    private Player player2;
-    private Deck deck;
-    private int currentRoundNumber;
-    private boolean isTie;
+    private GameManager game;
 
     private TextView game_LBL_title;
     private TextView game_LBL_roundNumber;
@@ -43,11 +37,7 @@ public class Activity_Game extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        player1 = new Player("Skier");
-        player2 = new Player("Snowboarder");
-        deck = new Deck(true);
-        currentRoundNumber = 0;
-        isTie = false;
+        game = new GameManager("Skier", "Snowboarder", true);
 
         game_LBL_title = findViewById(R.id.game_LBL_title);
         game_LBL_roundNumber = findViewById(R.id.game_LBL_roundNumber);
@@ -60,41 +50,35 @@ public class Activity_Game extends AppCompatActivity {
         game_IMG_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                playRound();
+                if (!game.playRound()) {
+                    return;
+                }
+
+                displayRound();
             }
         });
 
     } // onCreate
 
-    private void playRound() {
-        Card cardOfPlayer1, cardOfPlayer2;
-        int cardValueOfPlayer1, cardValueOfPlayer2;
+    private void displayRound() {
+        showCard(game.getPlayer1().getCurrentCard(), game_IMG_card1);
+        showCard(game.getPlayer2().getCurrentCard(), game_IMG_card2);
+        game_LBL_score1.setText("" + game.getPlayer1().getScore());
+        game_LBL_score2.setText("" + game.getPlayer2().getScore());
 
-        if (deck.isEmpty()) {
-            return;
+        if (!game.isTie()) {
+            game_LBL_roundNumber.setText("" + game.getCurrentRoundNumber());
+        } else {
+            game_LBL_title.setText("TIE BREAKER");
+            game_LBL_title.setTextColor(getColor(R.color.red));
+            game_LBL_roundNumber.setText("");
         }
 
-        cardOfPlayer1 = deck.drawCard();
-        cardValueOfPlayer1 = cardOfPlayer1.getValue();
-        showCard(cardOfPlayer1, game_IMG_card1);
-
-        cardOfPlayer2 = deck.drawCard();
-        cardValueOfPlayer2 = cardOfPlayer2.getValue();
-        showCard(cardOfPlayer2, game_IMG_card2);
-
-        calculatePlayerScore(cardValueOfPlayer1, cardValueOfPlayer2);
-
-        currentRoundNumber++;
-
-        if (!isTie) {
-            game_LBL_roundNumber.setText("" + currentRoundNumber);
+        if (game.getWinner() != null) {
+            openWinnerActivity(Activity_Game.this, game.getWinner());
         }
 
-        if (deck.isEmpty()) {
-            checkForWinner();
-        }
-
-    } // playRound
+    } // displayRound
 
     private void showCard(Card card, ImageView img) {
         String cardDrawableName = getCardIconName(card);
@@ -105,38 +89,6 @@ public class Activity_Game extends AppCompatActivity {
     private String getCardIconName(Card card) {
         return "ic_" + card.getName().name().toLowerCase() + "_" + card.getType().name().toLowerCase();
     }
-
-    private void calculatePlayerScore(int cardValueOfPlayer1, int cardValueOfPlayer2) {
-        if (cardValueOfPlayer1 > cardValueOfPlayer2) {
-            player1.addPoint();
-            game_LBL_score1.setText("" + player1.getScore());
-        } else if (cardValueOfPlayer1 < cardValueOfPlayer2) {
-            player2.addPoint();
-            game_LBL_score2.setText("" + player2.getScore());
-        } else { // its a tie
-            player1.addPoint();
-            game_LBL_score1.setText("" + player1.getScore());
-            player2.addPoint();
-            game_LBL_score2.setText("" + player2.getScore());
-        }
-    } // calculatePlayerScore
-
-    private void checkForWinner() {
-        int scoreOfPlayer1 = player1.getScore();
-        int scoreOfPlayer2 = player2.getScore();
-
-        if (scoreOfPlayer1 > scoreOfPlayer2) {
-            openWinnerActivity(Activity_Game.this, player1);
-        } else if (scoreOfPlayer1 < scoreOfPlayer2) {
-            openWinnerActivity(Activity_Game.this, player2);
-        } else { // its a tie
-            deck = new Deck(false);
-            game_LBL_title.setText("TIE BREAKER");
-            game_LBL_title.setTextColor(getColor(R.color.red));
-            game_LBL_roundNumber.setText("");
-            isTie = true;
-        }
-    } // checkForWinner
 
     private void openWinnerActivity(Activity activity, Player winner) {
         game_IMG_play.setVisibility(View.GONE);

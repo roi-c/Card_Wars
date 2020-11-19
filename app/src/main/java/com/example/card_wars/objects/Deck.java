@@ -7,6 +7,8 @@ public class Deck {
     private Stack<Card> deck;
     private boolean isRegularDeck;
 
+    public Deck() { }
+
     public Deck(boolean isRegularDeck) {
         deck = new Stack<Card>();
 

@@ -7,8 +7,7 @@ public class Card {
     private eType type;
     private eName name;
 
-    public Card() {
-    }
+    public Card() { }
 
     public Card(eName name, eType type) {
         this.type = type;

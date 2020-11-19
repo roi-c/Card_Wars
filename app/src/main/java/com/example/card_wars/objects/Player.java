@@ -3,13 +3,14 @@ package com.example.card_wars.objects;
 public class Player {
     private String name;
     private int score;
+    private Card currentCard;
 
-    public Player() {
-    }
+    public Player() { }
 
     public Player(String name) {
         this.name = name;
         this.score = 0;
+        this.currentCard = null;
     }
 
     public String getName() {
@@ -24,4 +25,11 @@ public class Player {
         score += 1;
     }
 
+    public Card getCurrentCard() {
+        return currentCard;
+    }
+
+    public void setCurrentCard(Card currentCard) {
+        this.currentCard = currentCard;
+    }
 } // Player
