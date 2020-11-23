@@ -26,4 +26,11 @@ public class Card {
         return name;
     }
 
+    public void setType(eType type) {
+        this.type = type;
+    }
+
+    public void setName(eName name) {
+        this.name = name;
+    }
 } // Card

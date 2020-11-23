@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,7 +20,7 @@ import com.example.card_wars.objects.Player;
 
 
 public class Activity_Game extends AppCompatActivity {
-    public static final int DELAY = 2500;
+    public static final int DELAY = 2500; // in ms
 
     private GameManager game;
 
@@ -108,7 +109,7 @@ public class Activity_Game extends AppCompatActivity {
                 finish();
             }
         }, DELAY);
-    }
+    } // openWinnerActivity
 
     @Override
     protected void onStart() {

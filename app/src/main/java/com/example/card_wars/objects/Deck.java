@@ -35,7 +35,23 @@ public class Deck {
        return deck.empty();
     }
 
-    public Card drawCard() {
+    public Card drawCardFromTop() {
         return deck.pop();
+    }
+
+    public Stack<Card> getDeck() {
+        return deck;
+    }
+
+    public boolean isRegularDeck() {
+        return isRegularDeck;
+    }
+
+    public void setDeck(Stack<Card> deck) {
+        this.deck = deck;
+    }
+
+    public void setRegularDeck(boolean regularDeck) {
+        isRegularDeck = regularDeck;
     }
 }

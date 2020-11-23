@@ -32,4 +32,13 @@ public class Player {
     public void setCurrentCard(Card currentCard) {
         this.currentCard = currentCard;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
 } // Player

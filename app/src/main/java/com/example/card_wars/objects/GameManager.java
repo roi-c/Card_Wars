@@ -12,7 +12,7 @@ public class GameManager {
 
     public GameManager(String player1Name, String player2Name, boolean isRegularDeck) {
         player1 = new Player(player1Name);
-        player2 = new Player(player1Name);
+        player2 = new Player(player2Name);
         deck = new Deck(isRegularDeck);
         currentRoundNumber = 0;
         isTie = false;
@@ -39,13 +39,41 @@ public class GameManager {
         return winner;
     }
 
+    public Deck getDeck() {
+        return deck;
+    }
+
+    public void setPlayer1(Player player1) {
+        this.player1 = player1;
+    }
+
+    public void setPlayer2(Player player2) {
+        this.player2 = player2;
+    }
+
+    public void setWinner(Player winner) {
+        this.winner = winner;
+    }
+
+    public void setDeck(Deck deck) {
+        this.deck = deck;
+    }
+
+    public void setCurrentRoundNumber(int currentRoundNumber) {
+        this.currentRoundNumber = currentRoundNumber;
+    }
+
+    public void setTie(boolean tie) {
+        isTie = tie;
+    }
+
     public boolean playRound() {
         if (deck.isEmpty()) {
             return false;
         }
 
-        player1.setCurrentCard(deck.drawCard());
-        player2.setCurrentCard(deck.drawCard());
+        player1.setCurrentCard(deck.drawCardFromTop());
+        player2.setCurrentCard(deck.drawCardFromTop());
 
         calculatePlayerScore(player1.getCurrentCard().getValue(), player2.getCurrentCard().getValue());
 
