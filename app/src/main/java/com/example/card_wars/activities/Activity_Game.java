@@ -80,13 +80,13 @@ public class Activity_Game extends AppCompatActivity {
         game_LBL_score1.setText("" + game.getPlayer1().getScore());
         game_LBL_score2.setText("" + game.getPlayer2().getScore());
 
+        game_DPB_determinateBar.setProgress((int)(game.getProgress() * 100));
+
         if (!game.isTie()) {
             game_LBL_title.setText("Round " + game.getCurrentRoundNumber());
-            game_DPB_determinateBar.setProgress((int)(game.getProgress() * 100));
-
         } else {
             game_LBL_title.setText("TIE BREAKER");
-            game_LBL_title.setTextColor(getColor(R.color.red));
+            game_LBL_title.setTextColor(getColor(R.color.purple_700));
         }
 
         if (game.getWinner() != null) {
