@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,12 +26,12 @@ public class Activity_Game extends AppCompatActivity {
     private GameManager game;
 
     private TextView game_LBL_title;
-    private TextView game_LBL_roundNumber;
     private TextView game_LBL_score1;
     private TextView game_LBL_score2;
     private ImageView game_IMG_card1;
     private ImageView game_IMG_card2;
     private ImageView game_IMG_play;
+    private ProgressBar game_DPB_determinateBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +58,12 @@ public class Activity_Game extends AppCompatActivity {
 
     private void findViews() {
         game_LBL_title = findViewById(R.id.game_LBL_title);
-        game_LBL_roundNumber = findViewById(R.id.game_LBL_roundNumber);
         game_LBL_score1 = findViewById(R.id.game_LBL_score1);
         game_LBL_score2 = findViewById(R.id.game_LBL_score2);
         game_IMG_card1 = findViewById(R.id.game_IMG_card1);
         game_IMG_card2 = findViewById(R.id.game_IMG_card2);
         game_IMG_play = findViewById(R.id.game_IMG_play);
+        game_DPB_determinateBar = findViewById(R.id.game_DPB_determinateBar);
     }
 
     private void displayRound() {
@@ -72,11 +73,12 @@ public class Activity_Game extends AppCompatActivity {
         game_LBL_score2.setText("" + game.getPlayer2().getScore());
 
         if (!game.isTie()) {
-            game_LBL_roundNumber.setText("" + game.getCurrentRoundNumber());
+            game_LBL_title.setText("Round " + game.getCurrentRoundNumber());
+            game_DPB_determinateBar.setProgress((int)(game.getProgress() * 100));
+
         } else {
             game_LBL_title.setText("TIE BREAKER");
             game_LBL_title.setTextColor(getColor(R.color.red));
-            game_LBL_roundNumber.setText("");
         }
 
         if (game.getWinner() != null) {

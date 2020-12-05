@@ -1,12 +1,15 @@
 package com.example.card_wars.objects;
 
 public class GameManager {
+    public final static int MAX_NUM_OF_ROUNDS = (Card.eName.values().length	* Card.eType.values().length) / 2;
+
     private Player player1;
     private Player player2;
     private Player winner;
     private Deck deck;
     private int currentRoundNumber;
     private boolean isTie;
+    private float progress;
 
     public GameManager() { }
 
@@ -39,6 +42,10 @@ public class GameManager {
         return winner;
     }
 
+    public float getProgress() {
+        return progress;
+    }
+
     public Deck getDeck() {
         return deck;
     }
@@ -57,6 +64,10 @@ public class GameManager {
 
     public void setDeck(Deck deck) {
         this.deck = deck;
+    }
+
+    public void setProgress(float progress) {
+        this.progress = progress;
     }
 
     public void setCurrentRoundNumber(int currentRoundNumber) {
@@ -78,6 +89,7 @@ public class GameManager {
         calculatePlayerScore(player1.getCurrentCard().getValue(), player2.getCurrentCard().getValue());
 
         currentRoundNumber++;
+        progress = (float)currentRoundNumber / MAX_NUM_OF_ROUNDS;
 
         if (deck.isEmpty()) {
             checkForWinner();

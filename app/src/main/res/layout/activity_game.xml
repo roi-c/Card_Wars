@@ -20,18 +20,15 @@
         android:textStyle="bold"
         />
 
-    <TextView
-        android:id="@+id/game_LBL_roundNumber"
-        android:layout_width="wrap_content"
+    <ProgressBar
+        android:id="@+id/game_DPB_determinateBar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/game_LBL_title"
         android:layout_alignTop="@id/game_IMG_card1"
         android:layout_centerHorizontal="true"
-        android:text=""
-        android:textColor="@color/black"
-        android:textSize="50sp"
-        android:textStyle="bold"
-        />
+        android:progress="0"/>
 
     <TextView
         android:id="@+id/game_LBL_score1"
