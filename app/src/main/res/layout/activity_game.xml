@@ -1,114 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundColor"
-    tools:context=".activities.Activity_Game">
-
-    <TextView
-        android:id="@+id/game_LBL_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp"
-        android:text="Round"
-        android:textColor="@color/titleColor"
-        android:textSize="50sp"
-        android:textStyle="bold"
-        />
-
-    <ProgressBar
-        android:id="@+id/game_DPB_determinateBar"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/game_LBL_title"
-        android:layout_alignTop="@id/game_IMG_card1"
-        android:layout_centerHorizontal="true"
-        android:progress="0"/>
-
-    <TextView
-        android:id="@+id/game_LBL_score1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/game_LBL_title"
-        android:layout_alignTop="@id/game_IMG_card1"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="35dp"
-        android:text="0"
-        android:textColor="@color/scoreColor"
-        android:textSize="50sp"
-        android:textStyle="bold"
-        />
+    tools:context=".activities.Activity_Game" >
 
     <ImageView
-        android:id="@+id/game_IMG_skier"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@id/game_LBL_score1"
-        android:layout_alignBottom="@id/game_IMG_card1"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:src="@drawable/ic_skier"/>
+    android:id="@+id/game_IMG_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scaleType="centerCrop"
+    />
 
-    <ImageView
-        android:id="@+id/game_IMG_card1"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_toRightOf="@id/game_IMG_skier"
-        android:layout_centerVertical="true"
-        android:src="@drawable/ic_uncovered_card"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
-    <TextView
-        android:id="@+id/game_LBL_score2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/game_LBL_title"
-        android:layout_alignTop="@id/game_IMG_card2"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="35dp"
-        android:text="0"
-        android:textColor="@color/scoreColor"
-        android:textSize="50sp"
-        android:textStyle="bold"
-        />
+        <TextView
+            android:id="@+id/game_LBL_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="18dp"
+            android:text="Round"
+            android:textColor="@color/titleColor"
+            android:textSize="50sp"
+            android:textStyle="bold"
+            />
 
-    <ImageView
-        android:id="@+id/game_IMG_snowboarder"
-        android:layout_width="100dp"
-        android:layout_height="80dp"
-        android:layout_below="@id/game_LBL_score2"
-        android:layout_alignBottom="@id/game_IMG_card2"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/ic_snowboarder"/>
+        <ProgressBar
+            android:id="@+id/game_DPB_determinateBar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/game_LBL_title"
+            android:layout_alignTop="@id/game_IMG_card1"
+            android:layout_centerHorizontal="true"
+            android:progress="0"/>
 
-    <ImageView
-        android:id="@+id/game_IMG_card2"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_toLeftOf="@id/game_IMG_snowboarder"
-        android:layout_centerVertical="true"
-        android:src="@drawable/ic_uncovered_card"/>
+        <TextView
+            android:id="@+id/game_LBL_score1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/game_LBL_title"
+            android:layout_alignTop="@id/game_IMG_card1"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="35dp"
+            android:text="0"
+            android:textColor="@color/scoreColor"
+            android:textSize="50sp"
+            android:textStyle="bold"
+            />
 
-    <ImageView
-        android:id="@+id/game_IMG_play"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:padding="18dp"
-        android:visibility="visible"
-        android:clickable="true"
-        android:src="@drawable/ic_swords"/>
+        <ImageView
+            android:id="@+id/game_IMG_skier"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_below="@id/game_LBL_score1"
+            android:layout_alignBottom="@id/game_IMG_card1"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/ic_skier"/>
+
+        <ImageView
+            android:id="@+id/game_IMG_card1"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_toRightOf="@id/game_IMG_skier"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_uncovered_card"/>
+
+        <TextView
+            android:id="@+id/game_LBL_score2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/game_LBL_title"
+            android:layout_alignTop="@id/game_IMG_card2"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="35dp"
+            android:text="0"
+            android:textColor="@color/scoreColor"
+            android:textSize="50sp"
+            android:textStyle="bold"
+            />
+
+        <ImageView
+            android:id="@+id/game_IMG_snowboarder"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:layout_below="@id/game_LBL_score2"
+            android:layout_alignBottom="@id/game_IMG_card2"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_snowboarder"/>
+
+        <ImageView
+            android:id="@+id/game_IMG_card2"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_toLeftOf="@id/game_IMG_snowboarder"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_uncovered_card"/>
+
+        <ImageView
+            android:id="@+id/game_IMG_play"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:padding="18dp"
+            android:visibility="visible"
+            android:clickable="true"
+            android:src="@drawable/ic_swords"/>
+
+    </RelativeLayout>
+
 
 </RelativeLayout>
-
-
-
 
 
 

@@ -8,13 +8,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.card_wars.R;
 
 public class Activity_MainMenu extends AppCompatActivity {
 
     private Button menu_BTN_playGame;
     private Button menu_BTN_topTen;
+    private ImageView menu_IMG_background;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,11 @@ public class Activity_MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity__main_menu);
 
         findViews();
+
+        Glide
+                .with(this)
+                .load(R.drawable.img_menu_background)
+                .into(menu_IMG_background);
 
         menu_BTN_playGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,6 +51,7 @@ public class Activity_MainMenu extends AppCompatActivity {
     private void findViews() {
         menu_BTN_playGame = findViewById(R.id.menu_BTN_playGame);
         menu_BTN_topTen = findViewById(R.id.menu_BTN_topTen);
+        menu_IMG_background = findViewById(R.id.menu_IMG_background);
     }
 
     private void openGameActivity(Activity activity) {

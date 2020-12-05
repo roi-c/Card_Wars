@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.card_wars.R;
 import com.example.card_wars.objects.GameManager;
 import com.example.card_wars.objects.Card;
@@ -32,6 +33,7 @@ public class Activity_Game extends AppCompatActivity {
     private ImageView game_IMG_card2;
     private ImageView game_IMG_play;
     private ProgressBar game_DPB_determinateBar;
+    private ImageView game_IMG_background;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,11 @@ public class Activity_Game extends AppCompatActivity {
         game = new GameManager("Skier", "Snowboarder", true);
 
         findViews();
+
+        Glide
+                .with(this)
+                .load(R.drawable.img_game_background)
+                .into(game_IMG_background);
 
         game_IMG_play.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +71,7 @@ public class Activity_Game extends AppCompatActivity {
         game_IMG_card2 = findViewById(R.id.game_IMG_card2);
         game_IMG_play = findViewById(R.id.game_IMG_play);
         game_DPB_determinateBar = findViewById(R.id.game_DPB_determinateBar);
+        game_IMG_background = findViewById(R.id.game_IMG_background);
     }
 
     private void displayRound() {
