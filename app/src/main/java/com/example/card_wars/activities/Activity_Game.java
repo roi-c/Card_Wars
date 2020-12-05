@@ -40,13 +40,7 @@ public class Activity_Game extends AppCompatActivity {
 
         game = new GameManager("Skier", "Snowboarder", true);
 
-        game_LBL_title = findViewById(R.id.game_LBL_title);
-        game_LBL_roundNumber = findViewById(R.id.game_LBL_roundNumber);
-        game_LBL_score1 = findViewById(R.id.game_LBL_score1);
-        game_LBL_score2 = findViewById(R.id.game_LBL_score2);
-        game_IMG_card1 = findViewById(R.id.game_IMG_card1);
-        game_IMG_card2 = findViewById(R.id.game_IMG_card2);
-        game_IMG_play = findViewById(R.id.game_IMG_play);
+        findViews();
 
         game_IMG_play.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +54,16 @@ public class Activity_Game extends AppCompatActivity {
         });
 
     } // onCreate
+
+    private void findViews() {
+        game_LBL_title = findViewById(R.id.game_LBL_title);
+        game_LBL_roundNumber = findViewById(R.id.game_LBL_roundNumber);
+        game_LBL_score1 = findViewById(R.id.game_LBL_score1);
+        game_LBL_score2 = findViewById(R.id.game_LBL_score2);
+        game_IMG_card1 = findViewById(R.id.game_IMG_card1);
+        game_IMG_card2 = findViewById(R.id.game_IMG_card2);
+        game_IMG_play = findViewById(R.id.game_IMG_play);
+    }
 
     private void displayRound() {
         showCard(game.getPlayer1().getCurrentCard(), game_IMG_card1);

@@ -20,6 +20,7 @@ public class Activity_Winner extends AppCompatActivity {
 
     private TextView winner_LBL_name;
     private TextView winner_LBL_score;
+    private Button winner_BTN_topTen;
     private Button winner_BTN_replay;
     private Button winner_BTN_close;
 
@@ -29,15 +30,19 @@ public class Activity_Winner extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_winner);
 
-        winner_LBL_name = findViewById(R.id.winner_LBL_name);
-        winner_LBL_score = findViewById(R.id.winner_LBL_score);
-        winner_BTN_replay = findViewById(R.id.winner_BTN_replay);
-        winner_BTN_close = findViewById(R.id.winner_BTN_close);
+        findViews();
 
         String nameFromGameActivity = getIntent().getStringExtra(EXTRA_KEY_NAME);
         winner_LBL_name.setText(nameFromGameActivity);
         int scoreFromGameActivity = getIntent().getIntExtra(EXTRA_KEY_SCORE, -1);
         winner_LBL_score.setText("" + scoreFromGameActivity);
+
+        winner_BTN_topTen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openTopTenActivity(Activity_Winner.this);
+            }
+        });
 
         winner_BTN_replay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +60,19 @@ public class Activity_Winner extends AppCompatActivity {
 
     } // onCreate
 
+    private void findViews() {
+        winner_LBL_name = findViewById(R.id.winner_LBL_name);
+        winner_LBL_score = findViewById(R.id.winner_LBL_score);
+        winner_BTN_replay = findViewById(R.id.winner_BTN_replay);
+        winner_BTN_close = findViewById(R.id.winner_BTN_close);
+        winner_BTN_topTen = findViewById(R.id.winner_BTN_topTen);
+    }
+
+    private void openTopTenActivity(Activity activity) {
+        Intent myIntent = new Intent(activity, Activity_TopTen.class);
+        startActivity(myIntent);
+        finish();
+    }
 
     private void openGameActivity(Activity activity) {
         Intent myIntent = new Intent(activity, Activity_Game.class);

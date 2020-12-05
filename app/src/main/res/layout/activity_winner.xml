@@ -68,6 +68,15 @@
         />
 
     <Button
+        android:id="@+id/winner_BTN_topTen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/winner_BTN_replay"
+        android:padding="12dp"
+        android:textAllCaps="false"
+        android:text="Top Ten"/>
+
+    <Button
         android:id="@+id/winner_BTN_replay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -83,7 +92,7 @@
         android:layout_alignParentBottom="true"
         android:padding="12dp"
         android:textAllCaps="false"
-        android:text="Close"/>
+        android:text="Main Menu"/>
 
 </RelativeLayout>
 
