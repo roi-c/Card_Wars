@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -34,6 +35,7 @@ public class Activity_Game extends AppCompatActivity {
     private ImageView game_IMG_play;
     private ProgressBar game_DPB_determinateBar;
     private ImageView game_IMG_background;
+    private MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +79,7 @@ public class Activity_Game extends AppCompatActivity {
     private void displayRound() {
         showCard(game.getPlayer1().getCurrentCard(), game_IMG_card1);
         showCard(game.getPlayer2().getCurrentCard(), game_IMG_card2);
+        playSound(R.raw.snd_flip_card);
         game_LBL_score1.setText("" + game.getPlayer1().getScore());
         game_LBL_score2.setText("" + game.getPlayer2().getScore());
 
@@ -125,6 +128,19 @@ public class Activity_Game extends AppCompatActivity {
         }, DELAY);
     } // openWinnerActivity
 
+    private void playSound(int rawSound) {
+        mp = MediaPlayer.create(this, rawSound);
+
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp.release();
+            }
+        });
+
+        mp.start();
+    }
+
     @Override
     protected void onStart() {
         Log.d("activityLifeCycle", "onStart: Activity_Game");
@@ -155,5 +171,6 @@ public class Activity_Game extends AppCompatActivity {
         Log.d("activityLifeCycle", "onDestroy: Activity_Game");
         super.onDestroy();
     }
+
 
 } // Activity_Game

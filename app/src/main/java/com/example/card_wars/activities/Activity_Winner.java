@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +24,8 @@ public class Activity_Winner extends AppCompatActivity {
     private Button winner_BTN_topTen;
     private Button winner_BTN_replay;
     private Button winner_BTN_close;
+    private MediaPlayer mp;
+    private boolean isMpFinished;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,8 @@ public class Activity_Winner extends AppCompatActivity {
         setContentView(R.layout.activity_winner);
 
         findViews();
+
+        playSound(R.raw.snd_win_game);
 
         String nameFromGameActivity = getIntent().getStringExtra(EXTRA_KEY_NAME);
         winner_LBL_name.setText(nameFromGameActivity);
@@ -88,6 +93,34 @@ public class Activity_Winner extends AppCompatActivity {
     protected void onStart() {
         Log.d("activityLifeCycle", "onStart: Activity_Winner");
         super.onStart();
+        start();
+    }
+
+    private void playSound(int rawSound) {
+        mp = MediaPlayer.create(this, rawSound);
+
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp.release();
+                isMpFinished = true;
+            }
+        });
+
+        mp.start();
+    }
+
+    private void start() {
+        if (!isMpFinished) {
+            mp.start();
+        }
+
+    }
+
+    private void stop() {
+        if (!isMpFinished) {
+            mp.pause();
+        }
     }
 
     @Override
@@ -106,7 +139,7 @@ public class Activity_Winner extends AppCompatActivity {
     protected void onStop() {
         Log.d("activityLifeCycle", "onStop: Activity_Winner");
         super.onStop();
-
+        stop();
     }
 
     @Override
@@ -114,5 +147,7 @@ public class Activity_Winner extends AppCompatActivity {
         Log.d("activityLifeCycle", "onDestroy: Activity_Winner");
         super.onDestroy();
     }
+
+
 
 } // Activity_Winner
