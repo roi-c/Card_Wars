@@ -23,7 +23,7 @@ import com.example.card_wars.objects.Player;
 
 
 public class Activity_Game extends AppCompatActivity {
-    public static final int DELAY = 2500; // in ms
+    public static final int DELAY = 2000; // in ms
 
     private GameManager game;
 
@@ -36,6 +36,8 @@ public class Activity_Game extends AppCompatActivity {
     private ProgressBar game_DPB_determinateBar;
     private ImageView game_IMG_background;
     private MediaPlayer mp;
+    private Handler handler;
+    private boolean isGameStarted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class Activity_Game extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         game = new GameManager("Skier", "Snowboarder", true);
+        handler = new Handler();
 
         findViews();
 
@@ -52,18 +55,19 @@ public class Activity_Game extends AppCompatActivity {
                 .load(R.drawable.img_game_background)
                 .into(game_IMG_background);
 
+
         game_IMG_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!game.playRound()) {
-                    return;
-                }
-
-                displayRound();
+                game_IMG_play.setVisibility(View.GONE);
+                isGameStarted = true;
+                stop(); // reset the timer for first round to keep same delay as the other rounds
+                start(); // start the timer for first round to keep same delay as the other rounds
             }
         });
 
     } // onCreate
+
 
     private void findViews() {
         game_LBL_title = findViewById(R.id.game_LBL_title);
@@ -83,7 +87,7 @@ public class Activity_Game extends AppCompatActivity {
         game_LBL_score1.setText("" + game.getPlayer1().getScore());
         game_LBL_score2.setText("" + game.getPlayer2().getScore());
 
-        game_DPB_determinateBar.setProgress((int)(game.getProgress() * 100));
+        game_DPB_determinateBar.setProgress((int) (game.getProgress() * 100));
 
         if (!game.isTie()) {
             game_LBL_title.setText("Round " + game.getCurrentRoundNumber());
@@ -109,9 +113,8 @@ public class Activity_Game extends AppCompatActivity {
     }
 
     private void openWinnerActivity(Activity activity, Player winner) {
-        game_IMG_play.setVisibility(View.GONE);
         Toast.makeText(this, "Game Finished!", Toast.LENGTH_SHORT).show();
-        
+
         String name = winner.getName();
         int score = winner.getScore();
 
@@ -141,10 +144,32 @@ public class Activity_Game extends AppCompatActivity {
         mp.start();
     }
 
+    private Runnable runnable = new Runnable() {
+        public void run() {
+            handler.postDelayed(runnable, DELAY);
+            if (isGameStarted == true) {
+                if (!game.playRound()) {
+                    return;
+                }
+
+                displayRound();
+            }
+        }
+    };
+
+    private void start() {
+        handler.postDelayed(runnable, DELAY);
+    }
+
+    private void stop() {
+        handler.removeCallbacks(runnable);
+    }
+
     @Override
     protected void onStart() {
         Log.d("activityLifeCycle", "onStart: Activity_Game");
         super.onStart();
+        start();
     }
 
     @Override
@@ -163,7 +188,7 @@ public class Activity_Game extends AppCompatActivity {
     protected void onStop() {
         Log.d("activityLifeCycle", "onStop: Activity_Game");
         super.onStop();
-
+        stop();
     }
 
     @Override
