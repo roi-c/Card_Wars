@@ -23,7 +23,7 @@ import com.example.card_wars.objects.Player;
 
 
 public class Activity_Game extends AppCompatActivity {
-    public static final int DELAY = 250; // in ms
+    public static final int DELAY = 2000; // in ms
 
     private GameManager game;
 
