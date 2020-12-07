@@ -101,9 +101,10 @@ public class Activity_Winner extends AppCompatActivity {
 
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
-            public void onCompletion(MediaPlayer mp) {
-                mp.release();
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                mediaPlayer.release();
                 isMpFinished = true;
+                mp = null;
             }
         });
 
@@ -146,8 +147,8 @@ public class Activity_Winner extends AppCompatActivity {
     protected void onDestroy() {
         Log.d("activityLifeCycle", "onDestroy: Activity_Winner");
         super.onDestroy();
+        if (mp != null) {
+            mp.release(); }
     }
-
-
-
+    
 } // Activity_Winner

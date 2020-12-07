@@ -23,7 +23,7 @@ import com.example.card_wars.objects.Player;
 
 
 public class Activity_Game extends AppCompatActivity {
-    public static final int DELAY = 2000; // in ms
+    public static final int DELAY = 250; // in ms
 
     private GameManager game;
 
@@ -136,8 +136,9 @@ public class Activity_Game extends AppCompatActivity {
 
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
-            public void onCompletion(MediaPlayer mp) {
-                mp.release();
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                mediaPlayer.release();
+                mp = null;
             }
         });
 
@@ -195,6 +196,8 @@ public class Activity_Game extends AppCompatActivity {
     protected void onDestroy() {
         Log.d("activityLifeCycle", "onDestroy: Activity_Game");
         super.onDestroy();
+        if (mp != null) {
+            mp.release(); }
     }
 
 
