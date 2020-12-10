@@ -54,4 +54,5 @@ public class Deck {
     public void setRegularDeck(boolean regularDeck) {
         isRegularDeck = regularDeck;
     }
-}
+
+} // Deck

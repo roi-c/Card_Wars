@@ -13,11 +13,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.card_wars.R;
+import com.example.card_wars.objects.Player;
+import com.google.gson.Gson;
 
 
 public class Activity_Winner extends AppCompatActivity {
-    public static final String EXTRA_KEY_SCORE = "EXTRA_KEY_SCORE";
-    public static final String EXTRA_KEY_NAME = "EXTRA_KEY_NAME";
+    public static final String EXTRA_KEY_WINNER = "EXTRA_KEY_WINNER";
 
     private TextView winner_LBL_name;
     private TextView winner_LBL_score;
@@ -37,10 +38,10 @@ public class Activity_Winner extends AppCompatActivity {
 
         playSound(R.raw.snd_win_game);
 
-        String nameFromGameActivity = getIntent().getStringExtra(EXTRA_KEY_NAME);
-        winner_LBL_name.setText(nameFromGameActivity);
-        int scoreFromGameActivity = getIntent().getIntExtra(EXTRA_KEY_SCORE, -1);
-        winner_LBL_score.setText("" + scoreFromGameActivity);
+        String winnerJsonFromGameActivity = getIntent().getStringExtra(EXTRA_KEY_WINNER);
+        Player winner = new Gson().fromJson(winnerJsonFromGameActivity, Player.class);
+        winner_LBL_name.setText(winner.getName());
+        winner_LBL_score.setText("" + winner.getScore());
 
         winner_BTN_topTen.setOnClickListener(new View.OnClickListener() {
             @Override

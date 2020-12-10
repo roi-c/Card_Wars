@@ -6,6 +6,8 @@ public class Record {
     private long date = 0;
     private int score = 0;
 
+    // TODO add longtitude and latitude probably
+
     public Record() { }
 
     public Record(String name, long date, int score) {
@@ -40,4 +42,5 @@ public class Record {
         this.score = score;
         return this;
     }
-}
+
+} // Record

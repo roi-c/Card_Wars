@@ -4,8 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.example.card_wars.R;
+import com.example.card_wars.objects.Record;
+import com.example.card_wars.objects.TopTen;
+import com.example.card_wars.utils.SP;
+import com.google.gson.Gson;
 
 public class Activity_TopTen extends AppCompatActivity {
 
@@ -14,6 +19,17 @@ public class Activity_TopTen extends AppCompatActivity {
         Log.d("activityLifeCycle", "onCreate: Activity_TopTen");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_ten);
+
+        String ttJson = SP.getInstance().getString(SP.KEYS.KEY_TOP_TEN, "NA");
+        TopTen topTen = new Gson().fromJson(ttJson, TopTen.class);
+
+        for(int i = 0 ; i < topTen.getRecords().size(); i++) {
+            Record record = topTen.getRecords().get(i);
+            Log.d("testt", i + ")" +record.getName() +" " +record.getScore() + " " + record.getDate());
+        }
+
+        Log.d("testt", "------------------------------------");
+
     } // onCreate
 
 

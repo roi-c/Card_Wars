@@ -1,7 +1,12 @@
 package com.example.card_wars.objects;
 
+import com.example.card_wars.utils.SP;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+
 public class GameManager {
-    public final static int MAX_NUM_OF_ROUNDS = (Card.eName.values().length	* Card.eType.values().length) / 2;
+    public final static int MAX_NUM_OF_ROUNDS = (Card.eName.values().length * Card.eType.values().length) / 2;
 
     private Player player1;
     private Player player2;
@@ -10,8 +15,10 @@ public class GameManager {
     private int currentRoundNumber;
     private boolean isTie;
     private float progress;
+    private TopTen topTen;
 
-    public GameManager() { }
+    public GameManager() {
+    }
 
     public GameManager(String player1Name, String player2Name, boolean isRegularDeck) {
         player1 = new Player(player1Name);
@@ -20,6 +27,7 @@ public class GameManager {
         currentRoundNumber = 0;
         isTie = false;
         winner = null;
+        topTen = new TopTen();
     }
 
     public int getCurrentRoundNumber() {
@@ -89,7 +97,7 @@ public class GameManager {
         calculatePlayerScore(player1.getCurrentCard().getValue(), player2.getCurrentCard().getValue());
 
         currentRoundNumber++;
-        progress = (float)currentRoundNumber / MAX_NUM_OF_ROUNDS;
+        progress = (float) currentRoundNumber / MAX_NUM_OF_ROUNDS;
 
         if (deck.isEmpty()) {
             checkForWinner();
@@ -121,6 +129,54 @@ public class GameManager {
             deck = new Deck(false);
             isTie = true;
         }
+
+        if (winner != null) {
+            addToTopTen(winner);
+        }
+
     } // checkForWinner
 
-}
+    private void addToTopTen(Player winner) {
+        Gson gson = new Gson();
+        SP sp = SP.getInstance();
+    //
+        String topTenJson = sp.getString(SP.KEYS.KEY_TOP_TEN, "NA");
+        if (topTenJson.equals("NA")) { // TopTen list is empty
+            addRecordToTopTen(winner, 0);
+        } else { // TopTen list is not empty
+            topTen = gson.fromJson(topTenJson, TopTen.class);
+            ArrayList<Record> records = topTen.getRecords();
+            int winnerScore = winner.getScore();
+            int i = 0;
+            if (winnerScore > records.get(records.size() - 1).getScore() || records.size() < TopTen.MAX_IN_LIST) {
+                do {
+                    int currentScore = records.get(i).getScore();
+                    if (winnerScore > currentScore && i < TopTen.MAX_IN_LIST) {
+                        if (records.size() == TopTen.MAX_IN_LIST) { // if list if full remove last
+                            records.remove(records.size() - 1);
+                        }
+                        addRecordToTopTen(winner, i);
+                        break;
+                    }
+                    if (i == records.size() - 1 && i < TopTen.MAX_IN_LIST) { // winner score is the lowest, and there is room in the list
+                        addRecordToTopTen(winner, i + 1);
+                        break;
+                    }
+                    i++;
+                } while (i < records.size());
+            }
+        }
+
+        sp.putString(SP.KEYS.KEY_TOP_TEN, gson.toJson(topTen));
+    } // addToTopTen
+
+    private void addRecordToTopTen(Player winner, int index) {
+        Record record = new Record()
+                .setDate(System.currentTimeMillis())
+                .setName(winner.getName())
+                .setScore(winner.getScore());
+
+        topTen.getRecords().add(index, record);
+    }
+
+} // GameManager

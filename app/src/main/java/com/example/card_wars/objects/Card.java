@@ -33,4 +33,5 @@ public class Card {
     public void setName(eName name) {
         this.name = name;
     }
+
 } // Card

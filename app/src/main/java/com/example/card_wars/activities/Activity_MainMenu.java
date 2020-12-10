@@ -12,6 +12,9 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.card_wars.R;
+import com.example.card_wars.objects.TopTen;
+import com.example.card_wars.utils.SP;
+import com.google.gson.Gson;
 
 public class Activity_MainMenu extends AppCompatActivity {
 
@@ -26,6 +29,11 @@ public class Activity_MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity__main_menu);
 
         findViews();
+
+        // TODO dont forget to remove
+//        String ttJson = SP.getInstance().getString(SP.KEYS.KEY_TOP_TEN, "NA");
+//        TopTen topTen = new Gson().fromJson(ttJson, TopTen.class);
+//        SP.getInstance().removeKey(SP.KEYS.KEY_TOP_TEN);
 
         Glide
                 .with(this)

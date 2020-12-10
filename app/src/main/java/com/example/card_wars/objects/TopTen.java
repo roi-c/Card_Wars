@@ -1,23 +1,26 @@
 package com.example.card_wars.objects;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class TopTen {
+    // TODO chnage to linked list
+    public final static int MAX_IN_LIST = 10;
 
-    private LinkedList<Record> records = new LinkedList<>();
+    private ArrayList<Record> records = new ArrayList<>();
 
     public TopTen() { }
 
-    public TopTen(LinkedList<Record> records) {
+    public TopTen(ArrayList<Record> records) {
         this.records = records;
     }
 
-    public LinkedList<Record> getRecords() {
+    public ArrayList<Record> getRecords() {
         return records;
     }
 
-    public TopTen setRecords(LinkedList<Record> records) {
+    public TopTen setRecords(ArrayList<Record> records) {
         this.records = records;
         return this;
     }
-}
+
+} // TopTen

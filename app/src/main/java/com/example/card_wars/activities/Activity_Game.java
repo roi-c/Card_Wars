@@ -20,10 +20,12 @@ import com.example.card_wars.R;
 import com.example.card_wars.objects.GameManager;
 import com.example.card_wars.objects.Card;
 import com.example.card_wars.objects.Player;
+import com.example.card_wars.utils.Signals;
+import com.google.gson.Gson;
 
 
 public class Activity_Game extends AppCompatActivity {
-    public static final int DELAY = 2000; // in ms
+    public static final int DELAY = 500; // in ms
 
     private GameManager game;
 
@@ -113,18 +115,16 @@ public class Activity_Game extends AppCompatActivity {
     }
 
     private void openWinnerActivity(Activity activity, Player winner) {
-        Toast.makeText(this, "Game Finished!", Toast.LENGTH_SHORT).show();
+        Signals.getInstance().toast("Game Finished!");
 
-        String name = winner.getName();
-        int score = winner.getScore();
+        String winnerJson = new Gson().toJson(winner);
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 Intent myIntent = new Intent(activity, Activity_Winner.class);
-                myIntent.putExtra(Activity_Winner.EXTRA_KEY_NAME, name);
-                myIntent.putExtra(Activity_Winner.EXTRA_KEY_SCORE, score);
+                myIntent.putExtra(Activity_Winner.EXTRA_KEY_WINNER, winnerJson);
                 startActivity(myIntent);
                 finish();
             }
