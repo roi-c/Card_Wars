@@ -139,7 +139,7 @@ public class GameManager {
     private void addToTopTen(Player winner) {
         Gson gson = new Gson();
         SP sp = SP.getInstance();
-    //
+
         String topTenJson = sp.getString(SP.KEYS.KEY_TOP_TEN, "NA");
         if (topTenJson.equals("NA")) { // TopTen list is empty
             addRecordToTopTen(winner, 0);

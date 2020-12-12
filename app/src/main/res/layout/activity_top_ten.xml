@@ -5,18 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundColor"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".activities.Activity_TopTen">
 
-    <TextView
-        android:id="@+id/TopTen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:textSize="32sp"
-        android:textColor="@color/black"
-        android:text="Top Ten" />
+    <ListView
+        android:id="@+id/topTen_LV_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        ></ListView>
+
 
 </LinearLayout>

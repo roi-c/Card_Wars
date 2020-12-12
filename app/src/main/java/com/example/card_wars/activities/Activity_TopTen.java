@@ -4,15 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.card_wars.R;
 import com.example.card_wars.objects.Record;
+import com.example.card_wars.objects.RecordListAdapter;
 import com.example.card_wars.objects.TopTen;
 import com.example.card_wars.utils.SP;
 import com.google.gson.Gson;
 
 public class Activity_TopTen extends AppCompatActivity {
+
+    private ListView topTen_LV_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,15 +24,17 @@ public class Activity_TopTen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_ten);
 
+        topTen_LV_list = findViewById(R.id.topTen_LV_list);
+
         String ttJson = SP.getInstance().getString(SP.KEYS.KEY_TOP_TEN, "NA");
         TopTen topTen = new Gson().fromJson(ttJson, TopTen.class);
 
-        for(int i = 0 ; i < topTen.getRecords().size(); i++) {
-            Record record = topTen.getRecords().get(i);
-            Log.d("testt", i + ")" +record.getName() +" " +record.getScore() + " " + record.getDate());
-        }
+//        topTen.getRecords().add(new Record("Roi", 5325324, 12));
+//        topTen.getRecords().add(new Record("Dan", 5325324, 11));
+//        topTen.getRecords().add(new Record("Meir", 5325324, 10));
 
-        Log.d("testt", "------------------------------------");
+        RecordListAdapter adapter = new RecordListAdapter(this, R.layout.adapter_view_layout, topTen.getRecords());
+        topTen_LV_list.setAdapter(adapter);
 
     } // onCreate
 
