@@ -9,17 +9,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.card_wars.R;
 import com.example.card_wars.objects.GameManager;
 import com.example.card_wars.objects.Card;
 import com.example.card_wars.objects.Player;
+import com.example.card_wars.objects.TopTen;
+import com.example.card_wars.utils.SP;
 import com.example.card_wars.utils.Signals;
 import com.google.gson.Gson;
 
@@ -40,6 +40,8 @@ public class Activity_Game extends AppCompatActivity {
     private MediaPlayer mp;
     private Handler handler;
     private boolean isGameStarted;
+    private SP sp;
+    private Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,16 @@ public class Activity_Game extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        game = new GameManager("Skier", "Snowboarder", true);
+        gson = new Gson();
+        sp = SP.getInstance();
+
+        TopTen topTen = null;
+        String ttJson = SP.getInstance().getString(SP.KEYS.KEY_TOP_TEN, "NA");
+        if (!ttJson.equals("NA")) {
+            topTen = new Gson().fromJson(ttJson, TopTen.class);
+        }
+        game = new GameManager("Skier", "Snowboarder", true, topTen);
+
         handler = new Handler();
 
         findViews();
@@ -152,14 +163,14 @@ public class Activity_Game extends AppCompatActivity {
                 if (!game.playRound()) {
                     return;
                 }
-
+                sp.putString(SP.KEYS.KEY_TOP_TEN, gson.toJson(game.getTopTen()));
                 displayRound();
             }
         }
     };
 
     private void start() {
-        handler.postDelayed(runnable, DELAY);
+       handler.postDelayed(runnable, DELAY);
     }
 
     private void stop() {
@@ -196,6 +207,7 @@ public class Activity_Game extends AppCompatActivity {
     protected void onDestroy() {
         Log.d("activityLifeCycle", "onDestroy: Activity_Game");
         super.onDestroy();
+
         if (mp != null) {
             mp.release(); }
     }

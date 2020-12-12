@@ -1,6 +1,7 @@
 package com.example.card_wars.objects;
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +23,11 @@ public class RecordListAdapter extends ArrayAdapter<Record> {
     private int mResource;
     private int lastPosition = -1;
 
-
     static class ViewHolder {
         TextView name;
         TextView date;
         TextView score;
+        TextView rank;
     }
 
     public RecordListAdapter(Context context, int resource, ArrayList<Record> objects) {
@@ -58,6 +59,7 @@ public class RecordListAdapter extends ArrayAdapter<Record> {
             holder.name = convertView.findViewById(R.id.textView1);
             holder.date = convertView.findViewById(R.id.textView2);
             holder.score = convertView.findViewById(R.id.textView3);
+            holder.rank = convertView.findViewById(R.id.textView0);
 
             result = convertView;
 
@@ -72,9 +74,13 @@ public class RecordListAdapter extends ArrayAdapter<Record> {
         result.startAnimation(animation);
         lastPosition = position;
 
+        String dateFormat = DateFormat.format("dd.MM.yy\nHH:mm:ss", date).toString();
+
         holder.name.setText(record.getName());
-        holder.date.setText("" + record.getDate());
+    //    holder.date.setText("" + record.getDate());
+        holder.date.setText(dateFormat);
         holder.score.setText("" + record.getScore());
+        holder.rank.setText((position + 1) + ".");
 
         return convertView;
 

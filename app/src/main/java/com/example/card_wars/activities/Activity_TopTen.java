@@ -4,19 +4,24 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.FrameLayout;
 
 import com.example.card_wars.R;
-import com.example.card_wars.objects.Record;
-import com.example.card_wars.objects.RecordListAdapter;
+import com.example.card_wars.callbacks.CallBack_Top;
+import com.example.card_wars.fragments.Fragment_List;
+import com.example.card_wars.fragments.Fragment_Map;
 import com.example.card_wars.objects.TopTen;
 import com.example.card_wars.utils.SP;
 import com.google.gson.Gson;
 
 public class Activity_TopTen extends AppCompatActivity {
 
-    private ListView topTen_LV_list;
+    private FrameLayout topTen_LAY_list;
+    private FrameLayout topTen_LAY_map;
+
+    private Fragment_List fragment_list;
+    private Fragment_Map fragment_map;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,19 +29,35 @@ public class Activity_TopTen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_ten);
 
-        topTen_LV_list = findViewById(R.id.topTen_LV_list);
-
+        findViews();
+//        initViews();
+        TopTen topTen = null;
         String ttJson = SP.getInstance().getString(SP.KEYS.KEY_TOP_TEN, "NA");
-        TopTen topTen = new Gson().fromJson(ttJson, TopTen.class);
+        if (!ttJson.equals("NA")) {
+            topTen = new Gson().fromJson(ttJson, TopTen.class);
+        }
 
-//        topTen.getRecords().add(new Record("Roi", 5325324, 12));
-//        topTen.getRecords().add(new Record("Dan", 5325324, 11));
-//        topTen.getRecords().add(new Record("Meir", 5325324, 10));
+        fragment_list = new Fragment_List(this, topTen);
+        fragment_list.setCallBack_top(callBack_top);
+        getSupportFragmentManager().beginTransaction().add(R.id.topTen_LAY_list, fragment_list).commit();
 
-        RecordListAdapter adapter = new RecordListAdapter(this, R.layout.adapter_view_layout, topTen.getRecords());
-        topTen_LV_list.setAdapter(adapter);
+        fragment_map = new Fragment_Map();
+        getSupportFragmentManager().beginTransaction().add(R.id.topTen_LAY_map, fragment_map).commit();
+
 
     } // onCreate
+
+    private void findViews() {
+        topTen_LAY_list = findViewById(R.id.topTen_LAY_list);
+        topTen_LAY_map = findViewById(R.id.topTen_LAY_map);
+    }
+
+    private CallBack_Top callBack_top = new CallBack_Top() {
+        @Override
+        public void addMarkerToMap(double lat, double lon) {
+            fragment_map.addMarker(lat, lon);
+        }
+    };
 
 
     @Override

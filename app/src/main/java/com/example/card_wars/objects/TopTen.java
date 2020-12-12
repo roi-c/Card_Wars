@@ -3,7 +3,7 @@ package com.example.card_wars.objects;
 import java.util.ArrayList;
 
 public class TopTen {
-    // TODO chnage to linked list
+
     public final static int MAX_IN_LIST = 10;
 
     private ArrayList<Record> records = new ArrayList<>();

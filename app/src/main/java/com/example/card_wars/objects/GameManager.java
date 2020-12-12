@@ -1,8 +1,5 @@
 package com.example.card_wars.objects;
 
-import com.example.card_wars.utils.SP;
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 
 public class GameManager {
@@ -20,14 +17,17 @@ public class GameManager {
     public GameManager() {
     }
 
-    public GameManager(String player1Name, String player2Name, boolean isRegularDeck) {
+    public GameManager(String player1Name, String player2Name, boolean isRegularDeck, TopTen topTen) {
         player1 = new Player(player1Name);
         player2 = new Player(player2Name);
         deck = new Deck(isRegularDeck);
         currentRoundNumber = 0;
         isTie = false;
         winner = null;
-        topTen = new TopTen();
+        this.topTen = topTen;
+        if (this.topTen == null) {
+            this.topTen = new TopTen();
+        }
     }
 
     public int getCurrentRoundNumber() {
@@ -58,6 +58,10 @@ public class GameManager {
         return deck;
     }
 
+    public TopTen getTopTen() {
+        return topTen;
+    }
+
     public void setPlayer1(Player player1) {
         this.player1 = player1;
     }
@@ -84,6 +88,10 @@ public class GameManager {
 
     public void setTie(boolean tie) {
         isTie = tie;
+    }
+
+    public void setTopTen(TopTen topTen) {
+        this.topTen = topTen;
     }
 
     public boolean playRound() {
@@ -137,14 +145,9 @@ public class GameManager {
     } // checkForWinner
 
     private void addToTopTen(Player winner) {
-        Gson gson = new Gson();
-        SP sp = SP.getInstance();
-
-        String topTenJson = sp.getString(SP.KEYS.KEY_TOP_TEN, "NA");
-        if (topTenJson.equals("NA")) { // TopTen list is empty
+        if (topTen.getRecords().isEmpty()) { // TopTen list is empty
             addRecordToTopTen(winner, 0);
         } else { // TopTen list is not empty
-            topTen = gson.fromJson(topTenJson, TopTen.class);
             ArrayList<Record> records = topTen.getRecords();
             int winnerScore = winner.getScore();
             int i = 0;
@@ -167,7 +170,6 @@ public class GameManager {
             }
         }
 
-        sp.putString(SP.KEYS.KEY_TOP_TEN, gson.toJson(topTen));
     } // addToTopTen
 
     private void addRecordToTopTen(Player winner, int index) {

@@ -8,9 +8,18 @@
     <TextView
         android:gravity="center"
         android:textAlignment="center"
+        android:text="0"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:id="@+id/textView0"
+        android:layout_weight="85.0"/>
+
+    <TextView
+        android:gravity="center"
+        android:textAlignment="center"
         android:text="TextView1"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="70dp"
         android:id="@+id/textView1"
         android:layout_weight="66.6"/>
 
@@ -24,14 +33,15 @@
             android:gravity="center"
             android:text="TextView2"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:id="@+id/textView2"/>
 
         <TextView
             android:gravity="center"
             android:text="TextView3"
+            android:textStyle="bold"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:id="@+id/textView3"
             android:layout_below="@+id/textView2"/>
     </LinearLayout>
