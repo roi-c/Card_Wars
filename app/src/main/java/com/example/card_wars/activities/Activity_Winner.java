@@ -4,16 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.card_wars.R;
 import com.example.card_wars.objects.Player;
+import com.example.card_wars.utils.MusicPlayer;
 import com.google.gson.Gson;
 
 
@@ -25,8 +24,7 @@ public class Activity_Winner extends AppCompatActivity {
     private Button winner_BTN_topTen;
     private Button winner_BTN_replay;
     private Button winner_BTN_close;
-    private MediaPlayer mp;
-    private boolean isMpFinished;
+    private MusicPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +32,11 @@ public class Activity_Winner extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_winner);
 
+        mp = new MusicPlayer(this);
+        mp.playSound(R.raw.snd_win_game);
+
         findViews();
 
-        playSound(R.raw.snd_win_game);
 
         String winnerJsonFromGameActivity = getIntent().getStringExtra(EXTRA_KEY_WINNER);
         Player winner = new Gson().fromJson(winnerJsonFromGameActivity, Player.class);
@@ -90,39 +90,12 @@ public class Activity_Winner extends AppCompatActivity {
         finish();
     }
 
+
     @Override
     protected void onStart() {
         Log.d("activityLifeCycle", "onStart: Activity_Winner");
         super.onStart();
-        start();
-    }
-
-    private void playSound(int rawSound) {
-        mp = MediaPlayer.create(this, rawSound);
-
-        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer) {
-                mediaPlayer.release();
-                isMpFinished = true;
-                mp = null;
-            }
-        });
-
         mp.start();
-    }
-
-    private void start() {
-        if (!isMpFinished) {
-            mp.start();
-        }
-
-    }
-
-    private void stop() {
-        if (!isMpFinished) {
-            mp.pause();
-        }
     }
 
     @Override
@@ -141,15 +114,14 @@ public class Activity_Winner extends AppCompatActivity {
     protected void onStop() {
         Log.d("activityLifeCycle", "onStop: Activity_Winner");
         super.onStop();
-        stop();
+        mp.pause();
     }
 
     @Override
     protected void onDestroy() {
         Log.d("activityLifeCycle", "onDestroy: Activity_Winner");
         super.onDestroy();
-        if (mp != null) {
-            mp.release(); }
+        mp.releaseIfNotFinished();
     }
 
 } // Activity_Winner
