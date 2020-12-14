@@ -13,17 +13,19 @@ public class GameManager {
     private boolean isTie;
     private float progress;
     private TopTen topTen;
+    private MyPosition myPosition;
 
     public GameManager() {
     }
 
-    public GameManager(String player1Name, String player2Name, boolean isRegularDeck, TopTen topTen) {
+    public GameManager(String player1Name, String player2Name, boolean isRegularDeck, TopTen topTen, MyPosition thePosition) {
         player1 = new Player(player1Name);
         player2 = new Player(player2Name);
         deck = new Deck(isRegularDeck);
         currentRoundNumber = 0;
         isTie = false;
         winner = null;
+        myPosition = thePosition;
         this.topTen = topTen;
         if (this.topTen == null) {
             this.topTen = new TopTen();
@@ -176,7 +178,8 @@ public class GameManager {
         Record record = new Record()
                 .setDate(System.currentTimeMillis())
                 .setName(winner.getName())
-                .setScore(winner.getScore());
+                .setScore(winner.getScore())
+                .setMyPosition(myPosition);
 
         topTen.getRecords().add(index, record);
     }

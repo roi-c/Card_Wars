@@ -6,12 +6,9 @@ import android.content.SharedPreferences;
 import static com.example.card_wars.Constants.SP_FILE;
 
 public class SP {
-
-    //TODO changed to appContext like in Signals
+    
     public interface KEYS {
         public static final String KEY_TOP_TEN = "KEY_TOP_TEN";
-        public static final String KEY_USER_THEME = "KEY_USER_THEME";
-
     }
 
     private static SP instance;

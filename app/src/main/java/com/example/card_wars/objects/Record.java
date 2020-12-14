@@ -5,17 +5,15 @@ public class Record {
     private String name = "";
     private long date = 0;
     private int score = 0;
-//    private double longitude = 0;
-//    private double latitude  = 0;
+    private MyPosition myPosition;
 
     public Record() { }
 
-    public Record(String name, long date, int score/*, double longitude, double latitude*/) {
+    public Record(String name, long date, int score) {
         this.name = name;
         this.date = date;
         this.score = score;
-//        this.longitude = longitude;
-//        this.latitude = latitude;
+
     }
 
     public String getName() {
@@ -45,21 +43,13 @@ public class Record {
         return this;
     }
 
-//    public double getLongitude() {
-//        return longitude;
-//    }
-//
-//    public Record setLongitude(double longitude) {
-//        this.longitude = longitude;
-//        return this;
-//    }
-//
-//    public double getLatitude() {
-//        return latitude;
-//    }
-//
-//    public Record setLatitude(double latitude) {
-//        this.latitude = latitude;
-//        return this;
-//    }
+    public MyPosition getMyPosition() {
+        return myPosition;
+
+    }
+
+    public Record setMyPosition(MyPosition myPosition) {
+        this.myPosition = myPosition;
+        return this;
+    }
 } // Record

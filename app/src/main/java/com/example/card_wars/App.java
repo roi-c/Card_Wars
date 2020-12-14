@@ -2,7 +2,6 @@ package com.example.card_wars;
 
 import android.app.Application;
 
-import com.example.card_wars.utils.MusicPlayer;
 import com.example.card_wars.utils.SP;
 import com.example.card_wars.utils.Signals;
 

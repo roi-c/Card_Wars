@@ -22,6 +22,7 @@ public class Activity_TopTen extends AppCompatActivity {
     private Fragment_List fragment_list;
     private Fragment_Map fragment_map;
 
+    private TopTen topTen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,23 +30,29 @@ public class Activity_TopTen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_ten);
 
-        findViews();
-//        initViews();
-        TopTen topTen = null;
+        topTen = null;
         String ttJson = SP.getInstance().getString(SP.KEYS.KEY_TOP_TEN, "NA");
         if (!ttJson.equals("NA")) {
             topTen = new Gson().fromJson(ttJson, TopTen.class);
         }
 
+        findViews();
+
+        initViews();
+
+    } // onCreate
+
+    private void initViews() {
         fragment_list = new Fragment_List(this, topTen);
         fragment_list.setCallBack_top(callBack_top);
         getSupportFragmentManager().beginTransaction().add(R.id.topTen_LAY_list, fragment_list).commit();
 
-        fragment_map = new Fragment_Map();
-        getSupportFragmentManager().beginTransaction().add(R.id.topTen_LAY_map, fragment_map).commit();
+        fragment_map = new Fragment_Map(topTen);
+        getSupportFragmentManager().beginTransaction().replace(R.id.topTen_LAY_map, fragment_map).commit();
 
 
-    } // onCreate
+    }
+
 
     private void findViews() {
         topTen_LAY_list = findViewById(R.id.topTen_LAY_list);
@@ -54,8 +61,8 @@ public class Activity_TopTen extends AppCompatActivity {
 
     private CallBack_Top callBack_top = new CallBack_Top() {
         @Override
-        public void addMarkerToMap(double lat, double lon) {
-            fragment_map.addMarker(lat, lon);
+        public void zoomToMarker(double latitude, double longitude) {
+            fragment_map.zoomToMarker(latitude, longitude);
         }
     };
 

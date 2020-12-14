@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.example.card_wars.R;
 import com.example.card_wars.objects.GameManager;
 import com.example.card_wars.objects.Card;
+import com.example.card_wars.objects.MyPosition;
 import com.example.card_wars.objects.Player;
 import com.example.card_wars.objects.TopTen;
 import com.example.card_wars.utils.MusicPlayer;
@@ -25,6 +26,8 @@ import com.google.gson.Gson;
 
 
 public class Activity_Game extends AppCompatActivity {
+    public static final String EXTRA_KEY_GAME = "EXTRA_KEY_GAME";
+
     public static final int DELAY = 500; // in ms
 
     private GameManager game;
@@ -42,6 +45,7 @@ public class Activity_Game extends AppCompatActivity {
     private SP sp;
     private Gson gson;
     private MusicPlayer mp;
+    private MyPosition myPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +62,11 @@ public class Activity_Game extends AppCompatActivity {
         if (!ttJson.equals("NA")) {
             topTen = new Gson().fromJson(ttJson, TopTen.class);
         }
-        game = new GameManager("Skier", "Snowboarder", true, topTen);
+
+        String locationJsonFromMainMenuActivity = getIntent().getStringExtra(EXTRA_KEY_GAME);
+        myPosition = new Gson().fromJson(locationJsonFromMainMenuActivity, MyPosition.class);
+
+        game = new GameManager("Skier", "Snowboarder", true, topTen, myPosition);
 
         handler = new Handler();
 
@@ -75,8 +83,8 @@ public class Activity_Game extends AppCompatActivity {
             public void onClick(View v) {
                 game_IMG_play.setVisibility(View.GONE);
                 isGameStarted = true;
-                stop(); // reset the timer for first round to keep same delay as the other rounds
-                start(); // start the timer for first round to keep same delay as the other rounds
+                stop(); // synchronize the timer
+                start(); // synchronize the timer
             }
         });
 
@@ -127,6 +135,7 @@ public class Activity_Game extends AppCompatActivity {
     }
 
     private void openWinnerActivity(Activity activity, Player winner) {
+        sp.putString(SP.KEYS.KEY_TOP_TEN, gson.toJson(game.getTopTen()));
         Signals.getInstance().toast("Game Finished!");
 
         String winnerJson = new Gson().toJson(winner);
@@ -150,7 +159,7 @@ public class Activity_Game extends AppCompatActivity {
                 if (!game.playRound()) {
                     return;
                 }
-                sp.putString(SP.KEYS.KEY_TOP_TEN, gson.toJson(game.getTopTen()));
+
                 displayRound();
             }
         }
@@ -196,8 +205,6 @@ public class Activity_Game extends AppCompatActivity {
         super.onDestroy();
 
         mp.releaseIfNotFinished();
-
     }
-
 
 } // Activity_Game

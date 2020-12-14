@@ -2,7 +2,6 @@ package com.example.card_wars.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +35,8 @@ public class Fragment_List extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d("pttt", "onCreateView - Fragment_List");
-
         View view = inflater.inflate(R.layout.fragment_list, container, false);
+
         findViews(view);
 
         initViews();
@@ -58,7 +56,7 @@ public class Fragment_List extends Fragment {
                 Record record = (Record) parent.getItemAtPosition(position);
                 Signals.getInstance().toast(record.getName());
                 if (callBack_top != null) {
-                    callBack_top.addMarkerToMap(32.07158054366349, 34.81063892756903);
+                    callBack_top.zoomToMarker(record.getMyPosition().getLatitude(), record.getMyPosition().getLongitude());
                 }
             }
         });
@@ -68,4 +66,5 @@ public class Fragment_List extends Fragment {
     private void findViews(View view) {
         topTen_LV_list = view.findViewById(R.id.topTen_LV_list);
     }
-}
+
+} // Fragment_List

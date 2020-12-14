@@ -40,12 +40,9 @@ public class RecordListAdapter extends ArrayAdapter<Record> {
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // get record information
         String name = getItem(position).getName();
         Long date = getItem(position).getDate();
         int score = getItem(position).getScore();
-
-        Record record = new Record(name, date, score);
 
         final View result; // create view result for showing the animation
 
@@ -76,13 +73,12 @@ public class RecordListAdapter extends ArrayAdapter<Record> {
 
         String dateFormat = DateFormat.format("dd.MM.yy\nHH:mm:ss", date).toString();
 
-        holder.name.setText(record.getName());
-    //    holder.date.setText("" + record.getDate());
+        holder.name.setText(name);
         holder.date.setText(dateFormat);
-        holder.score.setText("" + record.getScore());
+        holder.score.setText("" + score);
         holder.rank.setText((position + 1) + ".");
 
         return convertView;
-
     }
-}
+
+} // RecordListAdapter
