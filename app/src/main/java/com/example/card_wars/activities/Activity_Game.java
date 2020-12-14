@@ -28,7 +28,7 @@ import com.google.gson.Gson;
 public class Activity_Game extends AppCompatActivity {
     public static final String EXTRA_KEY_GAME = "EXTRA_KEY_GAME";
 
-    public static final int DELAY = 500; // in ms
+    public static final int DELAY = 2000; // in ms
 
     private GameManager game;
 
